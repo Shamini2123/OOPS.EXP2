@@ -4,24 +4,22 @@ public class DuplicateVowelConsonant {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // Input characters
-        System.out.print("Enter the characters (space-separated): ");
-        String input = sc.nextLine();
+        
+        System.out.print("URK24CS9011- Enter the characters: ");
+        String input = sc.nextLine().replaceAll(" ", ""); // remove spaces if any
 
-        // Convert to character array
-        String[] parts = input.split(" ");
-        char[] chars = new char[parts.length];
-        for (int i = 0; i < parts.length; i++) {
-            chars[i] = parts[i].charAt(0);
-        }
+        
+        char[] chars = input.toCharArray();
 
-        // To count duplicates
+       
         boolean[] visited = new boolean[chars.length];
 
-        // To count vowels and consonants
+        
         int vowels = 0, consonants = 0;
 
         System.out.print("Duplicate Characters are: ");
+        boolean hasDuplicates = false;
+
         for (int i = 0; i < chars.length; i++) {
             if (visited[i]) continue;
             int count = 1;
@@ -33,21 +31,28 @@ public class DuplicateVowelConsonant {
                 }
             }
 
-            // If character occurs more than once
+           
             if (count > 1) {
                 System.out.print(chars[i] + ", ");
+                hasDuplicates = true;
             }
 
-            // Count vowels and consonants
+           
             if (isVowel(chars[i])) vowels++;
             else if (Character.isLetter(chars[i])) consonants++;
         }
 
+        if (!hasDuplicates) {
+            System.out.print("None");
+        }
+
         System.out.println("\nNumber of vowels: " + vowels);
         System.out.println("Number of consonants: " + consonants);
+        
+        sc.close();
     }
 
-    // Method to check if a character is a vowel
+   
     public static boolean isVowel(char ch) {
         ch = Character.toLowerCase(ch);
         return (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u');
