@@ -1,16 +1,16 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class FixedPasswordGenerator {
     public static void main(String[] args) {
-        // Arrays
-        char[] small = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
+                char[] small = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
                         'n','o','p','q','r','s','t','u','v','w','x','y','z'};
         char[] capital = {'A','B','C','D','E','F','G','H','I','J','K','L','M',
                           'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
         char[] numbers = {'0','1','2','3','4','5','6','7','8','9'};
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the password length: ");
+        System.out.print(" Enter the password length: ");
         int len = sc.nextInt();
 
         if (len < 3) {
@@ -19,28 +19,28 @@ public class FixedPasswordGenerator {
         }
 
         char[] password = new char[len];
+        Random rand = new Random();
 
-        // First 3 fixed values: 4 from numbers, A from capital, z from small
-        password[0] = '4'; // number
-        password[1] = 'A'; // capital
-        password[2] = 'z'; // small
+    
+        password[0] = numbers[rand.nextInt(numbers.length)];
+        password[1] = capital[rand.nextInt(capital.length)];
+        password[2] = small[rand.nextInt(small.length)];
 
-        // Fixed sequence to fill remaining (repeat from arrays if needed)
-        int s = 0, c = 0, n = 0;
         for (int i = 3; i < len; i++) {
-            if (i % 3 == 0)
-                password[i] = small[s++ % small.length];
-            else if (i % 3 == 1)
-                password[i] = capital[c++ % capital.length];
-            else
-                password[i] = numbers[n++ % numbers.length];
+            int choice = rand.nextInt(3); // 0 = small, 1 = capital, 2 = number
+            if (choice == 0) {
+                password[i] = small[rand.nextInt(small.length)];
+            } else if (choice == 1) {
+                password[i] = capital[rand.nextInt(capital.length)];
+            } else {
+                password[i] = numbers[rand.nextInt(numbers.length)];
+            }
         }
 
-        // Output
+    
         System.out.print("The Generated Password is: ");
-        for (int i = 0; i < len; i++) {
-            System.out.print(password[i]);
+        for (char c : password) {
+            System.out.print(c);
         }
     }
 }
-
